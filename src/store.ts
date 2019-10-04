@@ -1,16 +1,11 @@
+import Vuex         from 'vuex';
 import Vue from 'vue';
-import Vuex from 'vuex';
+import TodoAppStore from '@/views/todo-app/todo-app.store';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
-
-  },
-  mutations: {
-
-  },
-  actions: {
-
+  modules: {
+    myModule12332: TodoAppStore,
   },
 });
