@@ -1,23 +1,27 @@
 <template>
   <div class="todo-item">
     <h3>{{todo.title}}</h3>
-    <p>{{todo.description}}</p>
-    <button @click="deleteTodo">delete</button>
+    <p>{{todo.importance === 0 ? 'normal': ''}}</p>
+    <p>{{todo.importance === 1 ? 'medium': ''}}</p>
+    <p>{{todo.importance === 2 ? 'high': ''}}</p>
+    <p>{{todo.importance === 3 ? 'extreme': ''}}</p>
+    {{todo.isDone ? 'done': 'not done'}}
+    <button @click="deleteTodo(todo.id)">delete</button>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
+import { namespace }            from 'vuex-class';
 import { ITodo }                from '@/types/types';
+
+const storeModule = namespace('todoStore');
 
 @Component({})
 
 export default class TodoItem extends Vue {
   @Prop() todo!: ITodo;
-
-  deleteTodo():void {
-    this.$store.commit('deleteTodo', this.todo.id);
-  }
+  @storeModule.Mutation deleteTodo!: (id: any) => void;
 }
 </script>
 

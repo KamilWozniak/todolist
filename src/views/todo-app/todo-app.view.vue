@@ -1,28 +1,30 @@
 <template>
-  <div class="todo-app">
-    <div class="todo-app__list-wrapper"
-         :class="{'todo-app__list-wrapper--sharp-bottom-corners'
-         : this.$store.state.isInputVisible}">
-      {{this.isInputVisible ? 'test1': 'test2'}}
-      <todo-list />
-<!--      <img v-show="!this.$store.state.isInputVisible"-->
-<!--           @click="toggleInputVisibility"-->
-<!--           class="add-todo-btn"-->
-<!--           src="../../assets/img/plus.png"-->
-<!--            alt="">-->
+  <div class="todo-app__wrapper">
+    <div class="todo-app">
+      <div class="todo-app__list-wrapper"
+           :class="{'todo-app__list-wrapper--sharp-bottom-corners'
+           : isInputVisible}">
 
+        <todo-list />
+        <img v-show="!isInputVisible"
+             @click="toggleInputVisibility"
+             class="add-todo-btn"
+             src="../../assets/img/plus.png"
+             alt="add todo">
+
+      </div>
+      <todo-input v-show="isInputVisible"/>
     </div>
-<!--    <todo-input v-show="this.$store.state.isInputVisible"/>-->
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue }             from 'vue-property-decorator';
-import { Mutation, namespace } from 'vuex-class';
+import { namespace } from 'vuex-class';
 import TodoInput                      from '@/components/todo-input.component.vue';
 import TodoList                       from '@/components/todo-list.component.vue';
 
-const module = namespace('myModule12332');
+const storeModule = namespace('todoStore');
 
 @Component({
   components: {
@@ -31,8 +33,8 @@ const module = namespace('myModule12332');
   },
 })
 export default class TodoApp extends Vue {
-  @module.State('isInputVisible') isInputVisible!: boolean;
-  @Mutation toggleInputVisibility!: void
+  @storeModule.State('isInputVisible') isInputVisible!: boolean;
+  @storeModule.Mutation toggleInputVisibility!: () => void;
 }
 
 </script>
@@ -40,12 +42,14 @@ export default class TodoApp extends Vue {
 <style scoped lang="scss">
 
 .todo-app {
-  background-color: $grey-100;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  &__wrapper {
+    background-color: $grey-100;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
   &__list-wrapper {
     width: 40rem;

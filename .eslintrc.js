@@ -12,6 +12,7 @@ module.exports = {
     'no-multi-spaces': 'off',
     'no-trailing-spaces': 'off',
     'lines-between-class-members': 'off',
+    'import/prefer-default-export': 'off',
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
   },
