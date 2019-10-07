@@ -4,7 +4,7 @@
       <div class="todo-app__list-wrapper"
            :class="{'todo-app__list-wrapper--sharp-bottom-corners'
            : isInputVisible}">
-
+        <RouterLink to="/done">Done Tasks</RouterLink>
         <todo-list />
         <img v-show="!isInputVisible"
              @click="toggleInputVisibility"
@@ -19,10 +19,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue }             from 'vue-property-decorator';
-import { namespace } from 'vuex-class';
-import TodoInput                      from '@/components/todo-input.component.vue';
-import TodoList                       from '@/components/todo-list.component.vue';
+import { Component, Vue } from 'vue-property-decorator';
+import { namespace }      from 'vuex-class';
+import TodoInput          from '@/views/todo-app/components/todo-input.component.vue';
+import TodoList           from '@/views/todo-app/components/todo-list.component.vue';
+import store              from '../../store';
+import todoStore          from './todo-app.store';
 
 const storeModule = namespace('todoStore');
 
@@ -30,6 +32,25 @@ const storeModule = namespace('todoStore');
   components: {
     TodoInput,
     TodoList,
+  },
+  beforeRouteEnter(to, from, next) {
+    if (store.state.todoStore === undefined) {
+      alert('rejestruje todoStore!');
+      store.registerModule('todoStore', todoStore);
+    }
+    next();
+  },
+  beforeRouteLeave(to, from, next) {
+    // if (this.$store.state.doneTodosState !== undefined) {
+    //   alert('wyrejestrowuje doneTodosStore');
+    //   store.unregisterModule('doneTodosStore');
+    // }
+    // store.unregisterModule('doneTodosStore');
+    // store.registerModule('todoStore', todoStore);
+    // alert('wyrejestrowuje todoStore');
+    // store.unregisterModule('todoStore');
+
+    next();
   },
 })
 export default class TodoApp extends Vue {
@@ -61,7 +82,7 @@ export default class TodoApp extends Vue {
     align-items: center;
     border-radius: 1rem 1rem 1rem 1rem;
     position: relative;
-    padding: 4rem 2rem 2rem 2rem;
+    padding-top: 3rem;
 
     &--sharp-bottom-corners {
       border-radius: 1rem 1rem 0 0;

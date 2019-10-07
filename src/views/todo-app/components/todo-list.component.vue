@@ -17,10 +17,11 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { namespace }      from 'vuex-class';
-import TodoItem           from '@/components/todo-item.component.vue';
-import { ITodo }          from '@/types/types';
+import TodoItem           from '@/views/todo-app/components/todo-item.component.vue';
+import { ITodo }          from '@/views/todo-app/todo-app.interface';
 
-const storeModule = namespace('todoStore');
+
+const local = namespace('todoStore');
 
 @Component({
   components: {
@@ -29,8 +30,8 @@ const storeModule = namespace('todoStore');
 })
 
 export default class TodoList extends Vue {
-  @storeModule.State todos!: Array<ITodo>;
-  @storeModule.Mutation toggleTodo!: (id: number) => void;
+  @local.State todos!: Array<ITodo>;
+  @local.Mutation toggleTodo!: (id: number) => void;
 }
 </script>
 

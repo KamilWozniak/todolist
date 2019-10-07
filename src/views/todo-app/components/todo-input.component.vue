@@ -11,13 +11,13 @@
       <button type="submit"
               class="todo-input__form__add-btn">
 
-        <img src="../assets/img/plus.png"
+        <img src="../../../assets/img/plus.png"
              alt="add todo"
              class="todo-input__form__add-btn__image">
 
       </button>
     </form>
-    <img src="../assets/img/error.png"
+    <img src="../../../assets/img/error.png"
          alt="close"
          class="todo-input__close-btn"
          @click="toggleInputVisibility">
@@ -28,10 +28,10 @@
 <script lang="ts">
 import { Component, Vue }               from 'vue-property-decorator';
 import { Mutation, namespace, State }   from 'vuex-class';
-import { Importance, ITaskDescription } from '@/types/types';
-import ImportanceSelector               from '@/components/importance-selector.component.vue';
+import { Importance, ITaskDescription } from '@/views/todo-app/todo-app.interface';
+import ImportanceSelector               from '@/views/todo-app/components/importance-selector.component.vue';
 
-const storeModule = namespace('todoStore');
+const local = namespace('todoStore');
 
 @Component({
   components: {
@@ -41,7 +41,7 @@ const storeModule = namespace('todoStore');
 export default class TodoInput extends Vue {
   newTodo: string ='';
   @State('selectedImportance', { namespace: 'todoStore' }) importance!: Importance;
-  @storeModule.Mutation toggleInputVisibility!: () => void;
+  @local.Mutation toggleInputVisibility!: () => void;
   @Mutation('addTodo', { namespace: 'todoStore' }) addTodo!: (taskDescription: ITaskDescription) => void;
   @Mutation('setTaskImportance', { namespace: 'todoStore' }) setImportance!: (importance: Importance) => void;
 

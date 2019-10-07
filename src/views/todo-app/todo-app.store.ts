@@ -1,5 +1,5 @@
 import { Module, Mutation, VuexModule }        from 'vuex-module-decorators';
-import { Importance, ITaskDescription, ITodo } from '@/types/types';
+import { Importance, ITaskDescription, ITodo } from '@/views/todo-app/todo-app.interface';
 
 @Module({ namespaced: true })
 export default class TodoAppStore extends VuexModule {

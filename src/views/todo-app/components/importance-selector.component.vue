@@ -22,7 +22,7 @@
 <script lang="ts">
 import { Component, Vue }  from 'vue-property-decorator';
 import { Mutation, State } from 'vuex-class';
-import { Importance }      from '@/types/types';
+import { Importance }      from '@/views/todo-app/todo-app.interface';
 
 @Component
 export default class ImportanceSelector extends Vue {
