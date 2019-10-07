@@ -1,13 +1,27 @@
-import { Importance } from '@/types/types';
 <template>
   <div class="todo-input">
-    <form @submit.prevent="addNewTodo()">
-      <input placeholder="Add todo here..." v-model="newTodo">
-      <importance-selector />
-      <button type="submit">Add todo</button>
+    <form @submit.prevent="addNewTodo()"
+          class="todo-input__form">
+
+      <input placeholder="Add todo here..."
+             v-model="newTodo"
+             class="todo-input__form__input">
+
+      <importance-selector class="todo-input__form__selector"/>
+      <button type="submit"
+              class="todo-input__form__add-btn">
+
+        <img src="../assets/img/plus.png"
+             alt="add todo"
+             class="todo-input__form__add-btn__image">
+
+      </button>
     </form>
     <img src="../assets/img/error.png"
-         alt="close" class="todo-input__close-btn" @click="toggleInputVisibility">
+         alt="close"
+         class="todo-input__close-btn"
+         @click="toggleInputVisibility">
+
   </div>
 </template>
 
@@ -49,10 +63,51 @@ export default class TodoInput extends Vue {
 .todo-input {
   background-color: $white;
   border-radius: 0 0 1rem 1rem;
-  width: 100%;
+  width: $app-width;
   position: relative;
   display: flex;
   justify-content: center;
+
+  &__form {
+    display: flex;
+    padding: 1rem 1rem 4rem 1rem;
+    flex-wrap: wrap;
+
+    &__input {
+      height: 3rem;
+      margin-right: 2rem;
+      border: none;
+      border-bottom: 1px solid $black;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    &__selector {
+      align-self: center
+    }
+
+    &__add-btn {
+      position: absolute;
+      border-radius: 5px;
+      border: none;
+      text-transform: uppercase;
+      background-color: transparent;
+      bottom: -3rem;
+      left: 12rem;
+
+      &:focus {
+        outline: none;
+      }
+
+      &__image {
+        width: 5rem;
+        height: auto;
+        cursor: pointer;
+      }
+    }
+  }
 
   &__close-btn {
     width: 5rem;
@@ -60,6 +115,7 @@ export default class TodoInput extends Vue {
     cursor: pointer;
     position: absolute;
     bottom: -2.5rem;
+    right: 12rem;
   }
 }
 

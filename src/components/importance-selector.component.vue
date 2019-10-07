@@ -35,16 +35,22 @@ export default class ImportanceSelector extends Vue {
 
 .selector {
   display: flex;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
 
   &__item {
     width: 1.6rem;
     height: 1.6rem;
     border-radius: 4rem;
-    border: 1px black solid;
+    border: 1px $grey-400 solid;
     margin: 0 1rem;
     cursor: pointer;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &:first-child {
+      margin-left: 0;
+    }
 
     &--normal {
       background-color: $white;
@@ -71,7 +77,7 @@ export default class ImportanceSelector extends Vue {
         border-radius: 4rem;
         margin-left: -4px;
         margin-top: -4px;
-        border: 1px solid greenyellow;
+        border: 1px solid $black;
       }
     }
   }

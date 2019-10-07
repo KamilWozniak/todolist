@@ -1,9 +1,16 @@
-import { Module, Mutation, VuexModule } from 'vuex-module-decorators';
-import { Importance, ITodo, ITaskDescription }            from '@/types/types';
+import { Module, Mutation, VuexModule }        from 'vuex-module-decorators';
+import { Importance, ITaskDescription, ITodo } from '@/types/types';
 
 @Module({ namespaced: true })
 export default class TodoAppStore extends VuexModule {
-  todos: Array<ITodo> = [];
+  todos: Array<ITodo> = [
+    {
+      id: -1, importance: Importance.EXTREME, isDone: false, title: 'First todo',
+    },
+    {
+      id: -2, importance: Importance.MEDIUM, isDone: false, title: 'Second todo',
+    },
+  ];
   selectedImportance: Importance = Importance.NORMAL;
   identifier: number = 0;
   isInputVisible: boolean = false;

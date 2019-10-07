@@ -1,11 +1,17 @@
 <template>
-  <div class="todo-list" v-if="todos.length > 0">
+  <div class="todo-list"
+       v-if="todos.length > 0">
+
     <todo-item v-for="todo in todos"
                :key="todo.id"
                :todo="todo"
                 @click.native="toggleTodo(todo.id)"/>
   </div>
-  <h2 v-else>You've done everything. Add new todo by clicking plus button</h2>
+  <h2 v-else class="todo-list__message">
+    You've done everything.
+    <br>
+    Add new todo by clicking plus button
+  </h2>
 </template>
 
 <script lang="ts">
@@ -31,7 +37,14 @@ export default class TodoList extends Vue {
 <style scoped lang="scss">
 
 .todo-list {
-  width: 100%;
+  width: $app-width;
+  padding: 1rem;
+
+  &__message {
+    font-size: 2rem;
+    text-transform: uppercase;
+    text-align: center;
+  }
 }
 
 </style>

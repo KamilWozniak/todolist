@@ -52,7 +52,7 @@ export default class TodoApp extends Vue {
   }
 
   &__list-wrapper {
-    width: 40rem;
+    width: $app-width;
     display: flex;
     flex-direction: column;
     min-height: 20rem;
@@ -60,8 +60,8 @@ export default class TodoApp extends Vue {
     background-color: $white;
     align-items: center;
     border-radius: 1rem 1rem 1rem 1rem;
-    padding-top: 3rem;
     position: relative;
+    padding: 4rem 2rem 2rem 2rem;
 
     &--sharp-bottom-corners {
       border-radius: 1rem 1rem 0 0;
