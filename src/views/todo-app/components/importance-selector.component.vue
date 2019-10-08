@@ -20,14 +20,17 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue }  from 'vue-property-decorator';
-import { Mutation, State } from 'vuex-class';
-import { Importance }      from '@/views/todo-app/todo-app.interface';
+import { Component, Vue } from 'vue-property-decorator';
+import { namespace }      from 'vuex-class';
+import { Importance }     from '@/interfaces/todo-app.interface';
+
+const LOCAL = 'todoStore';
+const local = namespace(LOCAL);
 
 @Component
 export default class ImportanceSelector extends Vue {
-  @State('selectedImportance', { namespace: 'todoStore' }) importance!: Importance;
-  @Mutation('setTaskImportance', { namespace: 'todoStore' }) setImportance!: (importance: Importance) => void
+  @local.State('selectedImportance') private importance!: Importance;
+  @local.Mutation('setTaskImportance') private setImportance!: (importance: Importance) => void;
 }
 </script>
 

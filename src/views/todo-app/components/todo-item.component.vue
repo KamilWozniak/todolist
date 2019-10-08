@@ -20,15 +20,16 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { namespace }            from 'vuex-class';
-import { Importance, ITodo }    from '@/views/todo-app/todo-app.interface';
+import { Importance, ITodo }    from '@/interfaces/todo-app.interface';
 
-const local = namespace('todoStore');
+const LOCAL = 'todoStore';
+const local = namespace(LOCAL);
 
 @Component
 
 export default class TodoItem extends Vue {
-  @Prop() todo!: ITodo;
-  @local.Mutation deleteTodo!: (id: any) => void;
+  @Prop() private todo!: ITodo;
+  @local.Action private deleteTodo!: (id: any) => void;
 
   getBackground: (importance: Importance) => string = (importance: Importance) => {
     if (importance === Importance.NORMAL) {

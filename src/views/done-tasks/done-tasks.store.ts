@@ -1,18 +1,24 @@
-import { Module, Mutation, VuexModule } from 'vuex-module-decorators';
-import { Importance, ITodo }            from '@/views/todo-app/todo-app.interface';
+import {
+  Action,
+  Module,
+  Mutation,
+  VuexModule,
+}                from 'vuex-module-decorators';
+import { ITodo } from '@/interfaces/todo-app.interface';
 
 @Module({ namespaced: true })
 export default class DoneTasksStore extends VuexModule {
-  doneTodos: Array<ITodo> = [{
-    id: -1, importance: Importance.EXTREME, isDone: false, title: 'First Done todo',
-  },
-  {
-    id: -2, importance: Importance.MEDIUM, isDone: false, title: 'Second Done todo',
-  },
-  ];
+  private doneTodos: Array<ITodo> = [];
 
   @Mutation
-  deleteTodo(id: number): void {
-    this.doneTodos = this.doneTodos.filter(todo => todo.id !== id);
+  setDone(done: Array<ITodo>): void {
+    this.doneTodos = done;
+  }
+
+  @Action
+  getDone(): void {
+    const doneTodos: Array<ITodo> = this.context.rootState.todos
+      .filter((todo: { isDone: boolean }) => todo.isDone);
+    this.context.commit('setDone', doneTodos);
   }
 }

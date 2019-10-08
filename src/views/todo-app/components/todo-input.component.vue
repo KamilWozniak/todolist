@@ -27,11 +27,12 @@
 
 <script lang="ts">
 import { Component, Vue }               from 'vue-property-decorator';
-import { Mutation, namespace, State }   from 'vuex-class';
-import { Importance, ITaskDescription } from '@/views/todo-app/todo-app.interface';
+import { namespace }                    from 'vuex-class';
+import { Importance, ITaskDescription } from '@/interfaces/todo-app.interface';
 import ImportanceSelector               from '@/views/todo-app/components/importance-selector.component.vue';
 
-const local = namespace('todoStore');
+const LOCAL = 'todoStore';
+const local = namespace(LOCAL);
 
 @Component({
   components: {
@@ -39,11 +40,12 @@ const local = namespace('todoStore');
   },
 })
 export default class TodoInput extends Vue {
-  newTodo: string ='';
-  @State('selectedImportance', { namespace: 'todoStore' }) importance!: Importance;
-  @local.Mutation toggleInputVisibility!: () => void;
-  @Mutation('addTodo', { namespace: 'todoStore' }) addTodo!: (taskDescription: ITaskDescription) => void;
-  @Mutation('setTaskImportance', { namespace: 'todoStore' }) setImportance!: (importance: Importance) => void;
+  private newTodo: string ='';
+
+  @local.State('selectedImportance') private importance!: Importance;
+  @local.Action private addTodo!: (taskDescription: ITaskDescription) => void;
+  @local.Mutation private toggleInputVisibility!: () => void;
+  @local.Mutation('setTaskImportance') private setImportance!: (importance: Importance) => void;
 
   addNewTodo():void {
     if (this.newTodo.length > 2) {

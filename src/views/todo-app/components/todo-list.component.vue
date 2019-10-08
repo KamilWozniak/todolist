@@ -15,13 +15,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import { namespace }      from 'vuex-class';
-import TodoItem           from '@/views/todo-app/components/todo-item.component.vue';
-import { ITodo }          from '@/views/todo-app/todo-app.interface';
+import { Component, Vue }   from 'vue-property-decorator';
+import { namespace, State } from 'vuex-class';
+import TodoItem             from '@/views/todo-app/components/todo-item.component.vue';
+import { ITodo }            from '@/interfaces/todo-app.interface';
 
-
-const local = namespace('todoStore');
+const LOCAL = 'todoStore';
+const local = namespace(LOCAL);
 
 @Component({
   components: {
@@ -30,8 +30,8 @@ const local = namespace('todoStore');
 })
 
 export default class TodoList extends Vue {
-  @local.State todos!: Array<ITodo>;
-  @local.Mutation toggleTodo!: (id: number) => void;
+  @State private todos!: Array<ITodo>;
+  @local.Action private toggleTodo!: (id: number) => void;
 }
 </script>
 

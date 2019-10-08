@@ -1,34 +1,20 @@
-import { Module, Mutation, VuexModule }        from 'vuex-module-decorators';
-import { Importance, ITaskDescription, ITodo } from '@/views/todo-app/todo-app.interface';
+import {
+  Action,
+  Module,
+  Mutation,
+  VuexModule,
+}                                              from 'vuex-module-decorators';
+import { Importance, ITaskDescription, ITodo } from '@/interfaces/todo-app.interface';
 
 @Module({ namespaced: true })
 export default class TodoAppStore extends VuexModule {
-  todos: Array<ITodo> = [
-    {
-      id: -1, importance: Importance.EXTREME, isDone: false, title: 'First todo',
-    },
-    {
-      id: -2, importance: Importance.MEDIUM, isDone: false, title: 'Second todo',
-    },
-  ];
   selectedImportance: Importance = Importance.NORMAL;
   identifier: number = 0;
   isInputVisible: boolean = false;
 
   @Mutation
-  addTodo(taskDescription: ITaskDescription): void {
-    this.todos.push({
-      id: this.identifier,
-      title: taskDescription.title,
-      importance: taskDescription.importance,
-      isDone: false,
-    });
+  increaseIdentifier(): void {
     this.identifier += 1;
-  }
-
-  @Mutation
-  deleteTodo(id: number): void {
-    this.todos = this.todos.filter(todo => todo.id !== id);
   }
 
   @Mutation
@@ -41,9 +27,28 @@ export default class TodoAppStore extends VuexModule {
     this.selectedImportance = importance;
   }
 
-  @Mutation
+  @Action
+  deleteTodo(id: number): void {
+    const newTodos: Array<ITodo> = this.context.rootState.todos
+      .filter((todo: { id: number; }) => todo.id !== id);
+    this.context.commit('setTodos', newTodos, { root: true });
+  }
+
+  @Action
+  addTodo(taskDescription: ITaskDescription) {
+    this.context.rootState.todos.push({
+      id: this.identifier,
+      title: taskDescription.title,
+      importance: taskDescription.importance,
+      isDone: false,
+    });
+    this.context.commit('increaseIdentifier');
+  }
+
+  @Action
   toggleTodo(id: number): void {
-    const index = this.todos.findIndex(item => item.id === id);
-    this.todos[index].isDone = !this.todos[index].isDone;
+    const todos: Array<ITodo> = this.context.rootState.todos;
+    const index: number = todos.findIndex((item: {id: number}) => item.id === id);
+    todos[index].isDone = !todos[index].isDone;
   }
 }

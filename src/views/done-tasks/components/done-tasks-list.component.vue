@@ -17,10 +17,10 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { namespace }      from 'vuex-class';
 import DoneItem           from './done-item.component.vue';
-import { ITodo }          from '@/views/todo-app/todo-app.interface';
+import { ITodo }          from '@/interfaces/todo-app.interface';
 
-
-const local = namespace('doneTasksStore');
+const LOCAL = 'doneTasksStore';
+const local = namespace(LOCAL);
 
 @Component({
   components: {
@@ -29,7 +29,7 @@ const local = namespace('doneTasksStore');
 })
 
 export default class TodoList extends Vue {
-  @local.State doneTodos!: Array<ITodo>;
+  @local.State private doneTodos!: Array<ITodo>;
 }
 </script>
 

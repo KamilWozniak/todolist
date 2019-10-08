@@ -4,6 +4,7 @@
       <div class="todo-app__list-wrapper"
            :class="{'todo-app__list-wrapper--sharp-bottom-corners'
            : isInputVisible}">
+
         <RouterLink to="/done">Done Tasks</RouterLink>
         <todo-list />
         <img v-show="!isInputVisible"
@@ -26,36 +27,29 @@ import TodoList           from '@/views/todo-app/components/todo-list.component.
 import store              from '../../store';
 import todoStore          from './todo-app.store';
 
-const storeModule = namespace('todoStore');
+const LOCAL = 'todoStore';
+const local = namespace(LOCAL);
 
 @Component({
   components: {
     TodoInput,
     TodoList,
   },
-  beforeRouteEnter(to, from, next) {
-    if (store.state.todoStore === undefined) {
-      alert('rejestruje todoStore!');
-      store.registerModule('todoStore', todoStore);
-    }
-    next();
-  },
-  beforeRouteLeave(to, from, next) {
-    // if (this.$store.state.doneTodosState !== undefined) {
-    //   alert('wyrejestrowuje doneTodosStore');
-    //   store.unregisterModule('doneTodosStore');
-    // }
-    // store.unregisterModule('doneTodosStore');
-    // store.registerModule('todoStore', todoStore);
-    // alert('wyrejestrowuje todoStore');
-    // store.unregisterModule('todoStore');
-
-    next();
-  },
 })
 export default class TodoApp extends Vue {
-  @storeModule.State('isInputVisible') isInputVisible!: boolean;
-  @storeModule.Mutation toggleInputVisibility!: () => void;
+  @local.State private isInputVisible!: boolean;
+  @local.Mutation private toggleInputVisibility!: () => void;
+
+  beforeRouteEnter(to: any, from: any, next: any) {
+    if (!Object.prototype.hasOwnProperty.call(store.state, LOCAL)) {
+      store.registerModule(LOCAL, todoStore);
+    }
+    next();
+  }
+
+  beforeDestroy() {
+    store.unregisterModule(LOCAL);
+  }
 }
 
 </script>

@@ -13,6 +13,8 @@ module.exports = {
     'no-trailing-spaces': 'off',
     'lines-between-class-members': 'off',
     'import/prefer-default-export': 'off',
+    'class-methods-use-this': 'off',
+    'prefer-destructuring': 'off',
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
   },

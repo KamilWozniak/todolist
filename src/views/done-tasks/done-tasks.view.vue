@@ -2,7 +2,7 @@
   <div class="done-tasks__wrapper">
     <div class="done-tasks">
       <div class="done-tasks__list-wrapper">
-        <RouterLink to="/" >All todos</RouterLink>
+        <RouterLink to="/">All todos</RouterLink>
         <done-tasks-list />
       </div>
     </div>
@@ -11,30 +11,37 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { namespace }      from 'vuex-class';
 import DoneTasksList      from './components/done-tasks-list.component.vue';
-import store         from '@/store';
-import myModule from './done-tasks.store';
+import store              from '@/store';
+import myModule           from './done-tasks.store';
+import { ITodo }          from '@/interfaces/todo-app.interface';
+
+const LOCAL = 'doneTasksStore';
+const local = namespace(LOCAL);
 
 @Component({
   components: {
     DoneTasksList,
   },
-  beforeRouteLeave(to, from, next) {
-    alert('wyrejestrowuje doneTasksStore');
-    // store.registerModule('doneTasksStore', myModule);
-    // store.unregisterModule('doneTasksStore');
-    store.unregisterModule('doneTasksStore');
-    next();
-  },
-  beforeRouteEnter(to, from, next) {
-    if (store.state.doneTasksStore === undefined) {
-      alert('rejestruje doneTaskStore');
-      store.registerModule('doneTasksStore', myModule);
-    }
-    next();
-  },
 })
 export default class DoneTasks extends Vue {
+  @local.Action private getDone!: () => Array<ITodo>;
+
+  created(): void {
+    this.getDone();
+  }
+
+  beforeRouteEnter(to: any, from: any, next: any): void {
+    if (!Object.prototype.hasOwnProperty.call(store.state, LOCAL)) {
+      store.registerModule(LOCAL, myModule);
+    }
+    next();
+  }
+
+  beforeDestroy(): void {
+    store.unregisterModule(LOCAL);
+  }
 }
 
 

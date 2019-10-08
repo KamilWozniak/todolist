@@ -1,13 +1,21 @@
 import Vuex           from 'vuex';
 import Vue            from 'vue';
-import TodoAppStore   from '@/views/todo-app/todo-app.store';
-import DoneTasksStore from '@/views/done-tasks/done-tasks.store';
+import { Importance } from '@/interfaces/todo-app.interface';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  modules: {
-    // todoStore: TodoAppStore,
-    // doneTasksStore: DoneTasksStore,
+  state: {
+    todos: [{
+      id: -1, importance: Importance.EXTREME, isDone: false, title: 'First todo',
+    },
+    {
+      id: -2, importance: Importance.MEDIUM, isDone: false, title: 'Second todo',
+    }],
+  },
+  mutations: {
+    setTodos(state, newTodos) {
+      state.todos = newTodos;
+    },
   },
 });

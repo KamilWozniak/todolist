@@ -8,27 +8,22 @@
 
       {{doneItem.title}}
     </h3>
-    <el-button type="danger"
-               class="done-item__delete-btn"
-               icon="el-icon-delete"
-               size="mini"
-               circle
-               @click.stop="deleteTodo(doneItem.id)"></el-button>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { namespace }            from 'vuex-class';
-import { Importance, ITodo }    from '@/views/todo-app/todo-app.interface';
+import { Importance, ITodo }    from '@/interfaces/todo-app.interface';
 
+const LOCAL = 'doneTasksStore';
 const local = namespace('doneTasksStore');
 
 @Component
 
 export default class TodoItem extends Vue {
-  @Prop() doneItem!: ITodo;
-  @local.Mutation deleteTodo!: (id: any) => void;
+  @Prop() private doneItem!: ITodo;
+  @local.Mutation private deleteTodo!: (id: any) => void;
 
   getBackground: (importance: Importance) => string = (importance: Importance) => {
     if (importance === Importance.NORMAL) {
@@ -51,7 +46,7 @@ export default class TodoItem extends Vue {
   margin-bottom: 2rem;
   cursor: pointer;
   border-bottom: 1px $grey-400 solid;
-  width: 32rem;
+  width: 35rem;
   position: relative;
   margin-left: 1rem;
   padding-bottom: 2px;
